@@ -68,7 +68,7 @@ tags
 *.user
 .vscode
 .DS_Store
-generate/
+# generate/
 temp/
 .idea
 __pycache__
