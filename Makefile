@@ -3,7 +3,7 @@ DEBUG_FLAGS = -O0 -g -DBE_DEBUG
 TEST_FLAGS  = $(DEBUG_FLAGS) --coverage -fno-omit-frame-pointer -fsanitize=address -fsanitize=undefined
 LIBS        = -lm
 TARGET      = berry
-CC          = gcc
+CC          = clang
 MKDIR       = mkdir
 LFLAGS      =
 PREFIX      = /usr/local
