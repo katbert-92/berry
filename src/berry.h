@@ -694,7 +694,7 @@ typedef int (*bctypefunc)(bvm*, const void*); /**< bctypefunc */
  * @brief be_writenewline
  *
  */
-#define be_writenewline()       be_writebuffer("\n", 1)
+#define be_writenewline()       be_writebuffer("\r\n", 2)
 
 /**
  * @def be_return
