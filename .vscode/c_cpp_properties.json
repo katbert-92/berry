@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "example",
+            "compilerPath": "${config:compiler_path}",
+            "includePath": [
+                "${workspaceFolder}",
+				"${workspaceFolder}/default",
+				"${workspaceFolder}/generate",
+                "${workspaceFolder}/src" 
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-gcc-arm",
+            "configurationProvider": "ms-vscode.makefile-tools"
+        }
+    ],
+    "version": 4
+}
