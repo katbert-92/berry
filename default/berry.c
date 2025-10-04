@@ -411,7 +411,14 @@ int main(int argc, char *argv[])
 {
     int res;
     bvm *vm = be_vm_new(); /* create a virtual machine instance */
-    res = analysis_args(vm, argc, argv);
+    // res = analysis_args(vm, argc, argv);
+
+    berry_paths(vm);
+    res = be_repl(vm, get_line, free_line);
+    if (res == -BE_MALLOC_FAIL) {
+        be_writestring("error: memory allocation failed.\n");
+    }
+    
     be_vm_delete(vm); /* free all objects and vm */
     return res;
 }
