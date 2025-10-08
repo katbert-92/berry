@@ -5,14 +5,14 @@
 ** See Copyright Notice in the LICENSE file or at
 ** https://github.com/Skiars/berry/blob/master/LICENSE
 ********************************************************************/
-#include "berry.h"
+#include "be_timelib.h"
 #include <time.h>
 
 #if BE_USE_TIME_MODULE
 
 static int m_time(bvm *vm)
 {
-    be_pushint(vm, (bint)time(NULL));
+    be_pushint(vm, be_time());
     be_return(vm);
 }
 
@@ -46,7 +46,7 @@ static int m_dump(bvm *vm)
 
 static int m_clock(bvm *vm)
 {
-    be_pushreal(vm, clock() / (breal)CLOCKS_PER_SEC);
+    be_pushreal(vm, be_clock());
     be_return(vm);
 }
 
