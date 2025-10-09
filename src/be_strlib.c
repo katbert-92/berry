@@ -63,11 +63,31 @@ int be_strcmp(bstring *s1, bstring *s2)
     return strcmp(str(s1), str(s2));
 }
 
+static void be_u64_to_str(char *buf, size_t size, long long x)
+{
+    long hi = (long)(x / 1000000000ULL);
+    long lo = (long)(x % 1000000000ULL);
+
+    if (hi)
+        snprintf(buf, size, "%lu%09lu", hi, lo);
+    else
+        snprintf(buf, size, "%lu", lo);
+}
+
+static void be_int_to_str(char *buf, size_t buf_size, bint value)
+{
+#if BE_NO_PRINTF_LONGLONG && (BE_INTGER_TYPE == 2)
+    be_u64_to_str(buf, buf_size, (uint64_t)value);
+#else
+    snprintf(buf, buf_size, BE_INT_FORMAT, value);
+#endif
+}
+
 bstring* be_num2str(bvm *vm, bvalue *v)
 {
-    char buf[25];
+    char buf[32];
     if (var_isint(v)) {
-        snprintf(buf, sizeof(buf),BE_INT_FORMAT, var_toint(v));
+        be_int_to_str(buf, sizeof(buf), var_toint(v));
     } else if (var_isreal(v)) {
         snprintf(buf, sizeof(buf), "%g", var_toreal(v));
     } else {
@@ -98,7 +118,7 @@ static bstring* sim2str(bvm *vm, bvalue *v)
         break;
     case BE_INDEX:
     case BE_INT:
-        snprintf(sbuf, sizeof(sbuf), BE_INT_FORMAT, var_toint(v));
+        be_int_to_str(sbuf, sizeof(sbuf), var_toint(v));
         break;
     case BE_REAL:
         snprintf(sbuf, sizeof(sbuf), "%g", var_toreal(v));
