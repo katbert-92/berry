@@ -65,13 +65,22 @@ int be_strcmp(bstring *s1, bstring *s2)
 
 static void be_u64_to_str(char *buf, size_t size, long long x)
 {
-    long hi = (long)(x / 1000000000ULL);
-    long lo = (long)(x % 1000000000ULL);
+    bbool is_neg = x < 0;
+    unsigned long long x_abs = is_neg ? -x : x;
 
-    if (hi)
-        snprintf(buf, size, "%lu%09lu", hi, lo);
-    else
-        snprintf(buf, size, "%lu", lo);
+    char tmp[32];
+    char* p = &tmp[31];
+    *p = '\0';
+
+    do {
+        *--p = '0' + (x_abs % 10);
+        x_abs /= 10;
+    } while (x_abs > 0);
+
+    if (is_neg)
+        *--p = '-';
+
+    snprintf(buf, size, "%s", p);
 }
 
 static void be_int_to_str(char *buf, size_t buf_size, bint value)
